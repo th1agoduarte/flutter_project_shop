@@ -14,7 +14,7 @@ class CartItemWidget extends StatelessWidget {
       key: ValueKey(cartItem.id),
       direction: DismissDirection.endToStart,
       background: Container(
-        color: Theme.of(context).colorScheme.error,
+        color: Theme.of(context).errorColor,
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 20),
         margin: const EdgeInsets.symmetric(
@@ -27,6 +27,29 @@ class CartItemWidget extends StatelessWidget {
           size: 40,
         ),
       ),
+      confirmDismiss: (_) {
+        return showDialog<bool>(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: const Text('Tem Certeza?'),
+            content: const Text('Quer remover o item do carrinho?'),
+            actions: [
+              TextButton(
+                child: const Text('Não'),
+                onPressed: () {
+                  Navigator.of(ctx).pop(false);
+                },
+              ),
+              TextButton(
+                child: const Text('Sim'),
+                onPressed: () {
+                  Navigator.of(ctx).pop(true);
+                },
+              ),
+            ],
+          ),
+        );
+      },
       onDismissed: (_) {
         Provider.of<Cart>(
           context,
