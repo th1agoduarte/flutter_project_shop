@@ -7,18 +7,22 @@ import 'package:shop/models/order.dart';
 import 'package:shop/utils/constants.dart';
 
 class OrderList with ChangeNotifier {
-  String _token;
-  String _userId;
+  final String _token;
+  final String _userId;
   List<Order> _items = [];
 
-  OrderList([this._token = '', this._items = const [], this._userId = '']);
+  OrderList([
+    this._token = '',
+    this._userId = '',
+    this._items = const [],
+  ]);
 
   List<Order> get items {
     return [..._items];
   }
 
   int get itemsCount {
-    return items.length;
+    return _items.length;
   }
 
   Future<void> loadOrders() async {
@@ -47,6 +51,7 @@ class OrderList with ChangeNotifier {
         ),
       );
     });
+
     _items = items.reversed.toList();
     notifyListeners();
   }
